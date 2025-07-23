@@ -12,7 +12,7 @@
       background-color: #f9f9f9;
       color: #333;
     }
-    h1, h2 {
+    h1{
       color: #004080;
     }
     ul {
