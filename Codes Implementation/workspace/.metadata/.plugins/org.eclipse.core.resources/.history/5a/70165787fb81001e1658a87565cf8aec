@@ -1,0 +1,88 @@
+package backand;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+@WebServlet("/newsortform")
+public class newsort extends HttpServlet{
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		PrintWriter out= response.getWriter();
+		String company_name=request.getParameter("search");
+		try {
+			int  upper=0;
+			int  lower=0;
+        	//out.print("hello");
+			String[] selectedValues = request.getParameterValues("priceRange");
+			 if (selectedValues != null) {
+		            for (String value : selectedValues) {
+		                if(value.equals("1")) {
+		                	upper=200000;
+		                	lower=100000;
+		                }else if(value.equals("2")){
+		                	upper=500000;
+		                	lower=200000;
+		                }
+		                else if(value.equals("3")){
+		                	upper=1000000;
+		                	lower=500000;
+		                }
+		                else if(value.equals("4")){
+		                	upper=2000000;
+		                	lower=1000000;
+		                }else {
+		                	upper=Integer.MAX_VALUE;
+		                	lower=0;
+		                }
+		            }
+		        }
+
+			response.setContentType("text/html");
+            Class.forName("org.postgresql.Driver");
+
+            String url = "jdbc:postgresql://localhost:5432/postgres";
+            String username = "postgres";
+            String password2 = "jay";
+            
+            Connection con = DriverManager.getConnection(url, username, password2);
+
+           
+            PreparedStatement ps = con.prepareStatement("select * from new_car_model  where company_name=? and price<=? and price>=?");
+            
+            ps.setString(1, company_name);
+            ps.setInt(2, upper);
+            ps.setInt(3, lower);
+            ResultSet rs=ps.executeQuery();
+           
+ 
+            HttpSession session=request.getSession();
+            request.setAttribute("resultset",rs );
+            response.setContentType("text/html");
+        	
+        	RequestDispatcher rd=request.getRequestDispatcher("/Newcar.jsp");
+        	rd.include(request, response);
+		}
+		
+		catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            System.out.println("PostgreSQL JDBC driver not found");
+        } catch (SQLException e) {
+        	//response.setContentType("text/html");
+        	out.print("<h2 style='color:red'> "+e.getMessage() +"</h2>");
+        	RequestDispatcher rd=request.getRequestDispatcher("/index.jsp");
+        	rd.include(request, response);
+        }
+		
+}
+
+}
+

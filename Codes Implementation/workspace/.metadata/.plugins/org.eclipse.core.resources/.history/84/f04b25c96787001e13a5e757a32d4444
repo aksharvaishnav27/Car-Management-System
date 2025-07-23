@@ -1,0 +1,120 @@
+/* Reset some default styles for better consistency */
+body, h1, h2, p, table {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+header {
+    background-color: #3498db;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+.user-card {
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    margin: 20px;
+    padding: 20px;
+}
+
+.user-photo {
+    text-align: center;
+}
+
+.user-photo img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+
+.edit-button {
+    background-color: #3498db;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.user-details {
+    flex-grow: 1;
+    padding-left: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table tr td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.bargain-requests {
+    margin-top: 20px;
+}
+
+.bargain-reqtitle {
+    background-color: #3498db;
+    color: white;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+.request {
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    margin: 10px 0;
+    padding: 10px;
+}
+
+.user-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.reqstatus h1 {
+    margin: 0;
+    padding: 5px;
+    color: white;
+}
+
+.accept-button, .reject-button {
+    background-color: #3498db;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .user-card {
+        flex-direction: column;
+    }
+
+    .user-details {
+        padding-left: 0;
+        margin-top: 10px;
+    }
+
+    .user-photo img {
+        width: 100%;
+        height: auto;
+    }
+}

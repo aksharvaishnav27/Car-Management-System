@@ -1,0 +1,226 @@
+<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*" %>
+<%@ page import="java.io.*" %>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="userdetail.css">
+    <title>CARDX - User Detail</title>
+</head>
+
+<body>
+
+<%
+    String name = (String) session.getAttribute("first_name") + " " + (String) session.getAttribute("last_name");
+    String pincode1 = (String) session.getAttribute("pin_code");
+    String area1 = (String) session.getAttribute("city");
+    String mobile1 = (String) session.getAttribute("mobile");
+    String area = (String) session.getAttribute("apt_name") + ", " + (String) session.getAttribute("area_name") + ", " + (String) session.getAttribute("city") + ", " + (String) session.getAttribute("state");
+%>
+
+<header>
+    <h1>CARDX - User Detail</h1>
+</header>
+
+<div class="user-card">
+    <div class="user-photo">
+        <img src="https://source.unsplash.com/random/250x250?person" alt="User Photo">
+        <div><a href="editprofile.jsp"><button class="edit-button">Edit-Profile</button></a></div>
+    </div>
+    <div class="user-details">
+        <table>
+            <tr>
+                <td>Name:</td>
+                <td><%=name %></td>
+            </tr>
+            <tr>
+                <td>Address:</td>
+                <td><%=area %></td>
+            </tr>
+            <tr>
+                <td>City:</td>
+                <td><%=area1 %> </td>
+            </tr>
+
+            <tr>
+                <td>Pincode:</td>
+                <td><%=pincode1 %></td>
+            </tr>
+            <tr>
+                <td>Phone Number:</td>
+                <td><%=mobile1 %></td>
+            </tr>
+            <tr>
+                <td>Cars Bought:</td>
+                <td>10</td>
+            </tr>
+            <tr>
+                <td>Cars Sold:</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>Cars Rented:</td>
+                <td>3</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<!-- Bargain Requests section -->
+<section class="bargain-requests">
+    <!-- Example bargain request 1 -->
+    <div class="bargain-reqtitle">
+        <h1>Sent - Bargain Requests</h1>
+    </div>
+
+    <%
+        try {
+            int a = 100;
+            int b = 101;
+            Class.forName("org.postgresql.Driver");
+            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "jay");
+
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM bargain_request WHERE customer_id = ?");
+            preparedStatement.setString(1, (String) session.getAttribute("email"));
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                a++;
+                
+    %>
+                <div class="request">
+                    <div class="user-details">
+                        <img src="https://source.unsplash.com/random/<%= a %>x150?person" alt="User Avatar" class="user-avatar">
+                        <div class="user-info">
+                            <h2>Robert</h2>
+                            <p>Price: <%= resultSet.getString("price") %></p>
+                            <p>Request_time: <%= resultSet.getString("request_time") %></p>
+                        </div>
+                    </div>
+                    <div class="reqstatus">
+                        <h1>
+                            <%
+                                String  carId = resultSet.getString("car_id");
+                                String query = "SELECT buyer_id FROM public.old_car WHERE car_id = ?";
+                                try (PreparedStatement oldCarPreparedStatement = connection.prepareStatement(query)) {
+                                    oldCarPreparedStatement.setInt(1, Integer.parseInt(carId));
+                                    try (ResultSet oldCarResultSet = oldCarPreparedStatement.executeQuery()) {
+                                        if (oldCarResultSet.next()) {
+                                            String buyerId = oldCarResultSet.getString("buyer_id");
+                                            if (buyerId == null) {
+                            %>
+                                                Pending
+                            <%
+                                            } else if (buyerId.equals(session.getAttribute("email"))) {
+                            %>
+                                                Accepted
+                            <%
+                                            } else {
+                            %>
+                                                Rejected
+                            <%
+                                            }
+                                        }
+                                    }
+                                }
+                            %>
+                        </h1>
+                    </div>
+                </div>
+            <%
+                }
+            } catch (SQLException | ClassNotFoundException e) {
+               // e.printStackTrace();
+            }
+        %>
+
+    <div class="bargain-reqtitle">
+        <h1>Received - Bargain Requests</h1>
+    </div>
+
+    <!-- Example bargain request 2 -->
+    <%
+        String model = "";
+        String company = "";
+        try {
+            Class.forName("org.postgresql.Driver");
+            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "jay");
+
+            // Get customer ID from the session
+            String customerId = (String) session.getAttribute("email");
+
+            // Query to get old_car information for the customer
+            String oldCarQuery = "SELECT * FROM old_car WHERE buyer_id = ?";
+            try (PreparedStatement oldCarStatement = connection.prepareStatement(oldCarQuery)) {
+                oldCarStatement.setString(1, customerId);
+                try (ResultSet oldCarResultSet = oldCarStatement.executeQuery()) {
+                    while (oldCarResultSet.next()) {
+                        String carId = oldCarResultSet.getString("car_id");
+                        String carDetailsQuery = "SELECT * FROM old_car_model WHERE car_id = ?";
+                        String bargainRequestQuery = "SELECT * FROM bargain_request WHERE car_id = ?";
+                       ;
+                        PreparedStatement car_statment = connection.prepareStatement(carDetailsQuery);
+                        car_statment .setInt(1, Integer.parseInt(carId));
+                        ResultSet jay = oldCarStatement.executeQuery();
+                        if(jay.next()) {
+                            model = jay.getString(2);
+                            company = jay.getString(1);
+                        }
+
+                        try (PreparedStatement bargainRequestStatement = connection.prepareStatement(bargainRequestQuery)) {
+                            bargainRequestStatement.setInt(1, Integer.parseInt(carId));
+                            try (ResultSet bargainRequestResultSet = bargainRequestStatement.executeQuery()) {
+                                while (bargainRequestResultSet.next()) {
+                                    // Get customer ID from the bargain request
+                                    String customerEmail = bargainRequestResultSet.getString("customer_id");
+
+                                    // Query to get customer information
+                                    String customerQuery = "SELECT * FROM customer WHERE \"Email_id\" = ?";
+                                    try (PreparedStatement customerStatement = connection.prepareStatement(customerQuery)) {
+                                        customerStatement.setString(1, customerEmail);
+                                        try (ResultSet customerResultSet = customerStatement.executeQuery()) {
+                                            if (customerResultSet.next()) {
+                                                // Display information for each received bargain request
+    %>
+                                                <div class="request">
+                                                    <div class="user-details">
+                                                        <img src="https://source.unsplash.com/random/140x140?person" alt="User Avatar" class="user-avatar">
+                                                        <div class="user-info">
+                                                            <h2>Model: <%= model %>  Company name <%= company %>  </h2>
+                                                            <h2><%= customerResultSet.getString("first_name") %> <%= customerResultSet.getString("last_name") %></h2>
+                                                            <p>Email: <%= customerResultSet.getString(1) %></p>
+                                                            <!-- Add other customer information as needed -->
+                                                        </div>
+                                                    </div>
+                                                    <div class="buttons">
+                                                        <button class="accept-button">Accept</button>
+                                                        <button class="reject-button">Reject</button>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Query to get car details from old_car_model view -->
+                                               
+    <%
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    %>
+    <!-- Add more requests as needed -->
+</section>
+
+</body>
+
+</html>

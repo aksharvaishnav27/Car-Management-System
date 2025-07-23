@@ -1,0 +1,305 @@
+<%@ page import="java.sql.*, java.util.*" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="mechanic.css">
+    <title>CARDX - Mechanic Detail</title>
+</head>
+<style>
+/* mechanicdetail.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #121111;
+    color: white;
+    text-shadow: 1px 1px blueviolet;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.mechanic-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: rgb(17, 1, 1);
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s ease;
+}
+
+.mechanic-card:hover {
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.3);
+    border-color: #4caf50;
+}
+
+.mechanic-photo {
+    margin-right: 20px;
+    border-radius: 10px;
+}
+
+.mechanic-photo img {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    border-bottom: 5px solid #535b53;
+    transition: border 0.3s ease;
+}
+
+.mechanic-photo img:hover {
+    border: 5px solid #ff5733; /* Change border color on hover */
+}
+
+.mechanic-details table {
+    border-bottom: 5px solid rgb(50, 62, 74);
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 18px;
+}
+
+.mechanic-details table td {
+    padding: 10px;
+    border-bottom: 1px solid #6a3b3b;
+}
+
+/* Style the last row of the table */
+.mechanic-details table tr:last-child td {
+    /* border: none; */
+}
+
+/* Styles for the service requests section */
+.service-requests {
+    padding: 20px;
+}
+
+.bargain-reqtitle {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background-color: #4caf50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.request {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    color: whitesmoke;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.user-details {
+    display: flex;
+    align-items: center;
+}
+
+.user-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+.service-reqtitle{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background-color: #4caf50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.buttons button {
+    padding: 10px 20px;
+    margin-left: 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+.servicedetail{
+    color: whitesmoke;
+    padding: 20px;
+    background-color: rgb(10, 10, 10);
+    opacity: 75%;
+    overflow: hidden;
+    border: inset 2px;
+    border-radius: 50px;
+}
+.accept-button {
+    background-color: #4caf50;
+    color: white;
+}
+
+.reject-button {
+    background-color: #f44336;
+    color: white;
+}
+</style>
+
+<body>
+<% String name=(String) session.getAttribute("mname");
+String email=(String) session.getAttribute("memail");
+String mobile=(String)session.getAttribute("mmobile");
+String area=(String) session.getAttribute("mapt_name")+" "+ (String) session.getAttribute("marea_name")+" "+(String) session.getAttribute("mcity")+" "+(String) session.getAttribute("mpin_code")+" "+(String) session.getAttribute("mstate");
+%>
+    <header>
+        <h1>CARDX - Mechanic Detail</h1>
+    </header>
+
+    <div class="mechanic-card">
+        <div class="mechanic-photo">
+            <img src="https://tse4.mm.bing.net/th?id=OIP.d577O3Dn0ar6ykDyaq4myAHaFj&pid=Api&P=0&h=180" alt="Mechanic Photo">
+        </div>
+        <div class="mechanic-details">
+            <table>
+                <tr>
+                    <td>Name:</td>
+                    <td><%=name%></td>
+                </tr>
+                <tr>
+                    <td>Mechanic ID:</td>
+                    <td><%=email%></td>
+                </tr>
+                <tr>
+                    <td>Specialization:</td>
+                    <td>Auto Repair</td>
+                </tr>
+                <tr>
+                    <td>Address:</td>
+                    <td><%=area%></td>
+                </tr>
+                <tr>
+                    <td>Phone Number:</td>
+                    <td><%=mobile%></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- Service Requests section -->
+    <section class="service-requests">
+        <div class="service-reqtitle"><h1>Service Requests</h1></div>
+        <!-- Example service request 1 -->
+        <div class="request">
+            <div class="user-details">
+                <img src="https://tse2.mm.bing.net/th?id=OIP.mgrHwtg1FAYdURshRNYDMwHaH8&pid=Api&P=0&h=180" alt="User Avatar"
+                    class="user-avatar">
+                <div class="user-info">
+                    <h2>Robert</h2>
+                    <p>Occupation: SE</p>
+                    <p>Location: ITHUB RACHI</p>
+                     <!-- Added Service Description -->
+                </div>
+            </div>
+            <div class="servicedetail">
+                <p>Service Description: Engine Repair</p>
+            </div>
+            <div class="buttons">
+                <button class="accept-button">Accept</button>
+            </div>
+        </div>
+                
+        <!-- Add more service requests as needed -->
+        
+        <%
+        
+        Class.forName("org.postgresql.Driver");
+
+        String url = "jdbc:postgresql://localhost:5432/postgres";
+        String username = "postgres";
+        String password2 = "Admin";
+        
+        Connection con = DriverManager.getConnection(url, username, password2);
+
+       
+        PreparedStatement ps = con.prepareStatement("select * from service_request where (customer_id,request_time) not in (select customer_id,request_time from service_accept)");
+        //ps.setString(1, email);
+        ResultSet rs=ps.executeQuery();
+        
+        
+    	// Assuming you have a List of service requests from your database
+    	//List<ServiceRequest> serviceRequests = fetchServiceRequestsFromDatabase();
+	
+	    // Iterate over the service requests and generate HTML dynamically
+	    while (rs.next()) {
+	    	
+	    	ps = con.prepareStatement("select * from customers where customer_id=?");
+	        ps.setString(1, rs.getString("customer_id"));
+	        ResultSet rs2=ps.executeQuery();
+	        rs2.next();
+	        
+	        ps = con.prepareStatement("select * from address where pin_code=?");
+            ps.setInt(1, rs2.getInt("pin_code"));  // Assuming pincode is an integer
+            ResultSet rs3 = ps.executeQuery();
+            rs3.next();
+	        
+            ps=con.prepareStatement("select * from phone_no where customer_id =?");
+            ps.setString(1, rs.getString("customer_id"));
+            ResultSet rs4=ps.executeQuery();
+            rs4.next();
+            
+	    	String a_name=rs2.getString("first_name");
+	    	String a_area=rs3.getString("city")+" "+rs3.getString("state");
+	    	String a_des=rs.getString("description_about_service");
+	    	String a_mobile=rs4.getString("mobile_no");
+	    	
+	    	//System.out.println(System.currentTimeMillis());
+	    	//System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSSSS").format(new java.sql.Timestamp(System.currentTimeMillis())));
+		%>
+    	<!-- Dynamic service request -->
+    	<div class="request">
+	        <div class="user-details">
+            	<img src="https://tse2.mm.bing.net/th?id=OIP.YOggOE6tFhCCNELEANDFewHaK2&pid=Api&P=0&h=180" alt="User Avatar"
+            	class="user-avatar">
+            	<div class="user-info">
+	                <h2><%= a_name %></h2>
+                	<p>Mobile no. : <%=a_mobile%></p>
+                	<p>Location:<%= a_area %> </p>
+            	</div>
+        	</div>
+        	<div class="servicedetail">
+	            <p>Service Description: <%= a_des %></p>
+        	</div>
+        	<form action="req_accept" method="post">
+    			<div class="buttons">
+        		<%
+            		java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(System.currentTimeMillis());
+            		//System.out.println("Current Timestamp: " + currentTimestamp); // Debug statement
+            		String formattedTimestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSSSS").format(currentTimestamp);
+            		//System.out.println("Formatted Timestamp: " + formattedTimestamp); // Debug statement
+        		%>
+        			<input type="hidden" name="customer_id" value="<%= rs.getString("customer_id") %>">
+        			<input type="hidden" name="req_time" value="<%= rs.getString("request_time") %>">
+        			<input type="hidden" name="acc_time" value="<%= formattedTimestamp %>">
+        			<button class="accept-button">Accept</button>
+        			
+    			</div>
+			</form>
+
+        	
+        	
+    	</div>
+	<%
+	    }
+	%>
+        
+        
+    </section>
+
+</body>
+
+</html>

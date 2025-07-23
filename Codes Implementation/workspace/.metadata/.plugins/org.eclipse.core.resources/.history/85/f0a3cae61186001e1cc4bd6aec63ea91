@@ -1,0 +1,156 @@
+@charset "ISO-8859-1";
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: black;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.search-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.search-bar {
+    margin-bottom: 20px;
+}
+
+.search-bar input[type="text"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.search-button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.filter-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Previous styles (header, search section, etc.) */
+
+.car-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Responsive layout, two cards in one row */
+    gap: 80px; /* Spacing between cards */
+    padding: 20px;
+    max-width: 1200px; /* Set a maximum width to limit the number of cards in one row */
+    margin: 0 auto; /* Center the cards */
+}
+
+.card {
+    width: 100%; /* Set the card width to 100% */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    text-align: center;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card img {
+    width: 100%;
+    /* padding: 10px; */
+    box-sizing: border-box;
+    border: double black 5px;
+    border-radius: 10px;
+}
+
+.price {
+    font-weight: bold;
+    font-size: 20px;
+    color: #16a219; /* Attractive price color */
+}
+
+.card-details h2 {
+    margin-top: 10px;
+}
+/* CSS for the send-barg-req section */
+.send-barg-req {
+    margin-top: 20px;
+}
+.card-head{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.send-barg-req-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border: solid 2px;
+    border-radius: 40px;
+    text-shadow: 2px 2px red;
+    background-color:green;
+}
+
+/* CSS for the send-barg-req-box */
+.send-barg-req-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#amount {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+
+span {
+    font-size: 18px;
+    margin-right: 5px;
+}
+
+#sendButton {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+#sendButton:hover {
+    background-color: #45a049;
+}
+
+/* Previous styles (footer, etc.) */

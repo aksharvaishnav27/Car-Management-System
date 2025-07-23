@@ -1,0 +1,69 @@
+package backand;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+@WebServlet("/make_admin")
+public class makeadmin extends jakarta.servlet.http.HttpServlet{
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		PrintWriter out= response.getWriter();
+		try {
+			response.setContentType("text/html");
+            Class.forName("org.postgresql.Driver");
+			String url = "jdbc:postgresql://localhost:5432/postgres";
+            String username = "postgres";
+            String password2 = "jay";
+            
+            Connection con = DriverManager.getConnection(url, username, password2);
+            
+            String id=request.getParameter("newadmin");
+            
+            PreparedStatement ps = con.prepareStatement("select 1 from customer where \"Email_id\"=?");
+            ps.setString(1,id);
+            int flag=0;
+            ResultSet rs=ps.executeQuery();
+            if(rs.next())
+            	flag=1;
+            
+            if(flag==0)
+            {
+            	out.println("Please Register as customer first");
+            	RequestDispatcher rd=request.getRequestDispatcher("/admin.jsp");
+           	    rd.include(request, response);
+            }
+            
+            else
+            	
+            {
+            	PreparedStatement ps1 = con.prepareStatement("insert into admin values(?) ");
+            	ps1.setString(1,id);
+            	out.println("Update successful");
+            	RequestDispatcher rd=request.getRequestDispatcher("/admin.jsp");
+           	    rd.include(request, response);
+            }
+		}
+
+		catch (ClassNotFoundException e) {
+		    e.printStackTrace();
+		    System.out.println("PostgreSQL JDBC driver not found");
+		} catch (SQLException e) {
+			response.setContentType("text/html");
+			out.print("<h2 style='color:red'> "+e.getMessage() +"</h2>");
+			RequestDispatcher rd=request.getRequestDispatcher("/admin.jsp");
+			rd.include(request, response);
+		}
+		
+		
+	}
+
+}

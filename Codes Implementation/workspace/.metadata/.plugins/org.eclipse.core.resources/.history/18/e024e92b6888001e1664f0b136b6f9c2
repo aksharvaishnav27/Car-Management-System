@@ -1,0 +1,478 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head><style >
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #aca4a4;
+    color: rgb(8, 1, 1);
+    padding: 10px 0;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+ nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+/* nav {
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+} */
+
+.logoimg {
+    width: 1px; /* Set the width of your logo */
+    height: auto; /* Set the height of your logo */
+    margin-right: 10px; /* Add some spacing between the logo and the text */
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+.nav-button {
+    background-color: #0d0d0e;
+    color: white;
+    border: solid white 2px;
+    border-radius: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    transition: background-color 0.3s ease;
+    width: 100px; /* Set a fixed width for the buttons */
+    height: 60px; /* Set a fixed height for the buttons */
+    text-align: center; /* Center the text horizontally */
+    text-decoration: none; /* Remove underline style */
+    display: inline-block; /* Ensure the buttons appear in a row */
+}
+
+.nav-button:hover {
+    background-color: #269d26;
+    /* Change the background color on hover */
+}
+
+.banner {
+    /* Styles for the banner section */
+}
+
+.featured-options {
+    /* Styles for the featured options section */
+}
+
+.contact-us {
+    /* Styles for the contact us section */
+
+}
+.welcome-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 50px;
+    background-color: #070707;
+}
+
+.quote {
+    flex: 1;
+    text-align: left;
+    margin-right: 50px;
+    font-family: 'Times New Roman', Times, serif;
+    color: azure;
+}
+
+.quote h1 {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.quote p {
+    font-size: 18px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #9c9696;
+}
+.facilitytitle{
+     display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.facilities {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 50px;
+}
+
+.facility {
+    flex: 1;
+    margin: 0 20px;
+    text-align: center;
+}
+
+.facility img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.facility-details h2 {
+    font-size: 24px;
+    margin-top: 20px;
+}
+
+.facility-details p {
+    font-size: 16px;
+    color: #555;
+}
+.customer-reviews {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 50px;
+}
+
+.review-card {
+    flex: 1;
+    max-width: 300px;
+    margin: 0 20px;
+    text-align: center;
+    padding: 20px;
+    background-color: #f8f9fa;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+}
+
+.ratings {
+    color: #ffcc00;
+    font-size: 24px;
+}
+
+.ratings span {
+    margin-right: 5px;
+}
+.contact-us {
+    text-align: center;
+    padding: 50px;
+    background-color: #333;
+    color: white;
+}
+
+.contact-us h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.contact-us p {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+.thank-you {
+    text-align: center;
+    padding: 50px;
+    background-color: #f8f9fa;
+    font-style: italic;
+}
+
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+.feedback-section {
+    background-color: #f4f4f4;
+    padding: 20px;
+    margin-top: 20px;
+    border: solid black 5px;
+    border-radius: 10px;
+}
+
+.feedback-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-shadow: 1px 1px whitesmoke;
+    background-color: rgb(74, 182, 74);
+    border: double black 5px ;
+    border-radius: 50px;
+}
+
+.feedback-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: row;
+   
+}
+.feedback-img{
+    padding: 10px;
+    margin-right: 10px;
+    border: double black 5px ;
+    border-radius: 10px;
+}
+.feedback-des{
+    margin-left: 100px;
+    margin-top: 30px;
+}
+.form-group label {
+    width: 100%;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.form-group select,
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    resize: vertical; /* Allow vertical resizing of the textarea */
+}
+
+.form-group button {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+</style>
+<script>
+    function scrollToFooter() {
+        var footer = document.getElementById('footer');
+        footer.scrollIntoView({ behavior: 'smooth' });
+    }
+	</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="homepage.css">
+    <title>Your Car Dealership</title>
+</head>
+<script>
+        function redirectToPage1() {
+            // Use the window.location.href property to set the URL you want to redirect to.
+            window.location.href = 'Newcar.jsp';
+            //document.getElementById("logoutForm").submit();
+        }
+        function redirectToPage0() {
+            // Use the window.location.href property to set the URL you want to redirect to.
+            window.location.href = 'profileFile.jsp';
+            //document.getElementById("logoutForm").submit();
+        }
+        function redirectToPage2() {
+            // Use the window.location.href property to set the URL you want to redirect to.
+            window.location.href = 'sell_car.jsp';
+            //document.getElementById("logoutForm").submit();
+        }
+        function redirectToPage3() {
+            // Use the window.location.href property to set the URL you want to redirect to.
+            window.location.href = 'oldcar.jsp';
+            //document.getElementById("logoutForm").submit();
+        }
+        function redirectToPage4() {
+            // Use the window.location.href property to set the URL you want to redirect to.
+            window.location.href = 'Rentcar.jsp';
+            //document.getElementById("logoutForm").submit();
+        }
+        function redirectToPage5() {
+            // Use the window.location.href property to set the URL you want to redirect to.
+            window.location.href = 'mlogin.jsp';
+            //document.getElementById("logoutForm").submit();
+        }
+    </script>
+<body>
+<% String name=(String) session.getAttribute("name");%>
+    <header>
+        <nav>
+
+           <div class="logoimg">
+           </div>
+            <div class="logo">
+				<pre>CARDX</pre>
+			</div>
+			
+            <ul>
+                <li> <button class="nav-button"  onclick="redirectToPage1()" >Buy New Car</button> </li>
+				<li><button class="nav-button" onclick="redirectToPage2()" >Sell your Car</button></li>
+                <li><button class="nav-button"onclick="redirectToPage3()" >Buy Old Car</button></li>
+                <li><button class="nav-button" onclick="redirectToPage4()">Rent Car</button></li>
+                <li><button class="nav-button" onclick="redirectToPage5()">MECHANIC</button></li>
+                <li><button class="nav-button" onclick="scrollToFooter()">Contact Us</button></li>
+                <li> <button class="nav-button" onclick="redirectToPage0()">Profile</button></li>
+				
+    <li> <form action="logout" method="post" id="logoutForm"><button class="nav-button" type="submit" >Logout</button> </form></li>
+
+            </ul>
+        </nav>
+    </header>
+    <section class="banner">
+    
+    </section>
+
+    <section class="featured-options">
+     
+    </section>
+
+    <section class="welcome-banner">
+        <div class="quote">
+            <h1 >Welcome <%=name %>  to CARDX</h1>
+            <p> where automotive dreams come true. With a passion for quality and a commitment to customer satisfaction, we redefine your car-buying experience. Our curated selection of vehicles reflects both luxury and practicality, ensuring you find a perfect match for your lifestyle. At CARDX, personalized service meets a diverse range of vehicles, making every drive a memorable journey. Step into our showroom and discover a world where your driving aspirations become reality. Your road to exceptional driving starts here.
+
+            </p>
+        </div>
+        <img src="https://visor.ph/wp-content/uploads/2017/12/car-quotes-main08.jpg" alt="Company Banner">
+    </section>
+
+
+        <div class="facilitytitle"><h1>Our Best Services</h1></div>
+    <section class="facilities">
+        
+        <div class="facility">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSV30M0vzhIz6fH_A7vaoXhO2mZQkgpsFyW3Q&usqp=CAU" width="300" height="313" alt="Service Station">
+            <div class="facility-details">
+                <h2>Service At Home</h2>
+                <p>Professional car maintenance and repair services to keep your vehicle in top condition.</p>
+            </div>
+        </div>
+        <div class="facility">
+            <img src="https://legrandebutler.com/wp-content/uploads/2016/01/limo-service-box.jpg" alt="Rent a Car">
+            <div class="facility-details">
+                <h2>Rent a Car</h2>
+                <p>Explore our wide range of rental cars for your travel needs. Affordable and convenient options.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="customer-reviews">
+        <div class="review-card">
+            <img src="https://image.freepik.com/free-photo/boy-with-car-village_19-102646.jpg" alt="Customer 1">
+            <p><strong>John Doe</strong></p>
+            <div class="ratings">
+                <span>&#9733;</span>
+                <span>&#9733;</span>
+                <span>&#9733;</span>
+                <span>&#9733;</span>
+                <span>&#9734;</span>
+            </div>
+            <p>"My visit to CARDX was pleasant. The selection of cars was impressive, and the staff was courteous. Although there was a slight delay in the paperwork, the team was apologetic and made sure everything was in order. The car I purchased runs beautifully, and I'm satisfied with my purchase. Overall, a good experience!""</p>
+        </div>
+        <div class="review-card">
+            <img src="https://i.dailymail.co.uk/i/pix/2014/09/03/1409756677059_wps_58_Man_Standing_in_Front_of_.jpg" alt="Customer 2">
+            <p><strong>David hook</strong></p>
+            <div class="ratings">
+                <span>&#9733;</span>
+                <span>&#9733;</span>
+                <span>&#9733;</span>
+                <span>&#9733;</span>
+                <span>&#9733;</span>
+            </div>
+            <p>"Exceptional service! Found my dream car here. The staff was knowledgeable and friendly. Highly recommended!"</p>
+        </div>
+        <div class="review-card">
+            <img src="data:image/jpeg;base64,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">
+            <p><strong>Alina Rose</strong></p>
+            <div class="ratings">
+                <span>&#9733;</span>
+                <span>&#9733;</span>
+                <span>&#9733;</span>
+                <span>&#9733;</span>
+                <span>&#9734;</span>
+            </div>
+            <p>""I had a fantastic experience at CARDX. The staff went above and beyond to help me find the perfect car. They were patient, understanding, and genuinely cared about my needs. The whole process was smooth, and I drove away with a smile on my face. I highly recommend CARDX for your car-buying needs!""</p>
+        </div>
+         <!-- Add more review cards as needed -->
+        
+    </section>
+  <section>
+       
+        <div class="feedback-section">
+            <div class="feedback-title">Give Your Feedback</div>
+            <form class="feedback-form" method="post" action="feedback-form"> 
+               
+                <div class="form-group">
+                    <div class="feedback-img">
+                        <img src="https://tse2.mm.bing.net/th?id=OIP.yYg02NQXbm_EC5XRQnih4wHaEy&pid=Api&P=0&h=180" alt="">
+                    </div>
+                    <div class="feedback-des">
+                     <label for="description">Description:</label>
+                    <textarea id="description" name="description" rows="4" placeholder="Give Your Feedback here.."></textarea>
+                    </div>
+                    
+                </div>
+                <div class="form-group">
+                    <button type="submit">Send Feedback</button>
+                </div>
+            </form>
+        </div>
+    </section>
+ 
+    <section class="contact-us">
+        <h2>Contact Us</h2>
+        <p>Email: cardx@RDX.com</p>
+        <p>Phone: +91 000-1111-000</p>
+        <p>Address: 89  RDX Car Street, Cityville, Gujarat </p>
+    </section>
+    
+    <section class="thank-you">
+        <blockquote>
+            <p>"Your Journey Starts Here. Thank You for Choosing CARDX."</p>
+        </blockquote>
+    </section>
+    
+<a id="footer"></a>
+    <footer>
+        <div class="copyright">&copy; 2023 CARDX. All rights reserved.</div>
+        <div class="social-media-icons">
+        </div>
+    </footer>
+</body>
+
+</html>

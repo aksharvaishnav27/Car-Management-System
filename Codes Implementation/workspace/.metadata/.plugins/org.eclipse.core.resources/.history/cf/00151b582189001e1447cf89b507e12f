@@ -1,0 +1,72 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+    
+<%@ page import="java.sql.*" %>
+<%@ page import="java.io.*" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<%
+	
+	try {
+		response.setContentType("text/html");
+        Class.forName("org.postgresql.Driver");
+		String url = "jdbc:postgresql://localhost:5432/postgres";
+        String username = "postgres";
+        String password2 = "jay";
+        
+        Connection con = DriverManager.getConnection(url, username, password2);
+        
+        PreparedStatement ps = con.prepareStatement("select * from feedback");
+        
+        ResultSet rs=ps.executeQuery();
+	
+	%>
+	
+	
+	<table border="1">
+                <tr>
+                    <th>Email Id</th>
+                    <th>Feedback time</th>
+                    <th>description</th>
+                </tr>
+                
+                
+         <%
+                    while(rs.next()) {
+          %>
+          
+         				 <tr>
+                            <td><%= rs.getString("email_id") %></td>
+                            <td><%= rs.getTimestamp("feedback_time") %></td>
+                            <td><%= rs.getString("description") %></td>
+                         </tr>
+                        
+                        <%
+                    }
+                %>
+            </table>
+            
+            	<%
+            	
+	}
+	
+	catch (ClassNotFoundException e) {
+	    e.printStackTrace();
+	    System.out.println("PostgreSQL JDBC driver not found");
+	} catch (SQLException e) {
+		response.setContentType("text/html");
+		out.print("<h2 style='color:red'> "+e.getMessage() +"</h2>");
+		RequestDispatcher rd=request.getRequestDispatcher("/admin.jsp");
+		rd.include(request, response);
+	}
+	
+            	%>
+	
+	
+</body>
+</html>

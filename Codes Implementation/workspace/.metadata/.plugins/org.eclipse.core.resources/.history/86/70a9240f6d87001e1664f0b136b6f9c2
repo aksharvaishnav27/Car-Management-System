@@ -1,0 +1,390 @@
+<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*" %>
+<%@ page import="java.io.*" %>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="userdetail.css">
+    <title>CARDX - User Detail</title>
+</head>
+<style> body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #121111;
+    color: white;
+    text-shadow: 1px 1px blueviolet;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.user-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: rgb(4, 4, 4);
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s ease;
+}
+
+.user-card:hover {
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.3);
+    border-color: #4caf50;
+}
+
+.user-photo {
+    margin-right: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.edit-button{
+    margin-top: 20px;
+    padding: 10px;
+    color: rgb(87, 0, 128);
+    
+    border: solid rgb(220, 208, 208) 2px;
+    border-radius: 30px;
+}
+
+.user-photo img {
+    width: 250px;
+    height: 250px;
+    max-width: 100%;
+    height: auto;
+    transition: transform 0.3s ease-in-out;
+    border-radius: 50%;
+    border-bottom: 5px solid #535b53;
+    
+}
+.user-photo .edit-button:hover {
+  background-color: greenyellow;
+
+}
+.user-photo img:hover {
+    transform: scale(3);
+    border: inherit whitesmoke 2px;
+    border-radius: 5%;
+}
+
+.user-details table {
+    border-bottom: 5px solid rgb(50, 62, 74);
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 18px;
+}
+
+.user-details table td {
+    padding: 10px;
+ border-bottom:1px solid #6a3b3b;
+}
+
+/* Style the last row of the table */
+.user-details table tr:last-child td {
+    /* border: none; */
+}
+
+/* Add additional styles as needed */
+/* Styles for the bargain requests section */
+.bargain-requests {
+    padding: 20px;
+}
+.bargain-reqtitle{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background-color: #4caf50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.request {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.user-details {
+    display: flex;
+    align-items: center;
+}
+
+.user-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.buttons button {
+    padding: 10px 20px;
+    margin-left: 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+.reqstatus{
+    padding: 5px;
+    background-color: rgb(19, 19, 105);
+    color: white;
+    text-shadow: 2px 2px green;
+    border: inset white 2px;
+    border-radius: 20px;
+
+}
+.accept-button {
+    background-color: #4caf50;
+    color: white;
+}
+
+.reject-button {
+    background-color: #f44336;
+    color: white;
+}</style>
+<body>
+
+<%
+    String name = (String) session.getAttribute("first_name") + " " + (String) session.getAttribute("last_name");
+    String pincode1 = (String) session.getAttribute("pin_code");
+    String area1 = (String) session.getAttribute("city");
+    String mobile1 = (String) session.getAttribute("mobile");
+    String area = (String) session.getAttribute("apt_name") + ", " + (String) session.getAttribute("area_name") + ", " + (String) session.getAttribute("city") + ", " + (String) session.getAttribute("state");
+%>
+
+<header>
+    <h1>CARDX - User Detail</h1>
+</header>
+
+<div class="user-card">
+    <div class="user-photo">
+        <img src="https://source.unsplash.com/random/250x250?person" alt="User Photo">
+        <div><a href="editprofile.jsp"><button class="edit-button">Edit-Profile</button></a></div>
+    </div>
+    <div class="user-details">
+        <table>
+            <tr>
+                <td>Name:</td>
+                <td><%=name %></td>
+            </tr>
+            <tr>
+                <td>Address:</td>
+                <td><%=area %></td>
+            </tr>
+            <tr>
+                <td>City:</td>
+                <td><%=area1 %> </td>
+            </tr>
+
+            <tr>
+                <td>Pincode:</td>
+                <td><%=pincode1 %></td>
+            </tr>
+            <tr>
+                <td>Phone Number:</td>
+                <td><%=mobile1 %></td>
+            </tr>
+            <tr>
+                <td>Cars Bought:</td>
+                <td>10</td>
+            </tr>
+            <tr>
+                <td>Cars Sold:</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>Cars Rented:</td>
+                <td>3</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<!-- Bargain Requests section -->
+<section class="bargain-requests">
+    <!-- Example bargain request 1 -->
+    <div class="bargain-reqtitle">
+        <h1>Sent - Bargain Requests</h1>
+    </div>
+
+    <%
+        try {
+            int a = 100;
+            int b = 101;
+            Class.forName("org.postgresql.Driver");
+            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "jay");
+
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM bargain_request WHERE customer_id = ?");
+            preparedStatement.setString(1, (String) session.getAttribute("email"));
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                a++;
+                
+    %>
+                <div class="request">
+                    <div class="user-details">
+                        <img src="https://source.unsplash.com/random/<%= a %>x150?person" alt="User Avatar" class="user-avatar">
+                        <div class="user-info">
+                            <h2>Robert</h2>
+                            <p>Price: <%= resultSet.getString("price") %></p>
+                            <p>Request_time: <%= resultSet.getString("request_time") %></p>
+                        </div>
+                    </div>
+                    <div class="reqstatus">
+                        <h1>
+                            <%   
+                                String  carId = resultSet.getString("car_id");
+                                String query = "SELECT buyer_id FROM public.old_car_view WHERE car_id = ?";
+                                try (PreparedStatement oldCarPreparedStatement = connection.prepareStatement(query)) {
+                                    oldCarPreparedStatement.setInt(1, Integer.parseInt(carId));
+                                    try (ResultSet oldCarResultSet = oldCarPreparedStatement.executeQuery()) {
+                                        if (oldCarResultSet.next()) {
+                                            String buyerId = oldCarResultSet.getString("buyer_id");
+                                            if (buyerId == null) {
+                            %>
+                                                Pending
+                            <%
+                                            } else if (buyerId.equals(session.getAttribute("email")) && resultSet.getString("price").equals(oldCarResultSet.getString(1)) ) {
+                            %>
+                                               Accepted
+
+                            <%
+                                            } else {
+                            %>
+                                                Rejected
+                            <%
+                                            }
+                                        }
+                                    }
+                                }
+                            %>
+                        </h1>
+                    </div>
+                </div>
+            <%
+                }
+            } catch (SQLException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        %>
+
+    <div class="bargain-reqtitle">
+        <h1>Received - Bargain Requests</h1>
+    </div>
+
+    <!-- Example bargain request 2 -->
+    <%
+    String carId="";
+        String model = "";
+        String company = "";
+        try {
+            Class.forName("org.postgresql.Driver");
+            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "jay");
+
+            // Get customer ID from the session
+            String customerId = (String) session.getAttribute("email");
+
+            // Query to get old_car information for the customer
+            String oldCarQuery = "SELECT * FROM old_car WHERE seller_id = ? and buyer_id is null";
+            try (PreparedStatement oldCarStatement = connection.prepareStatement(oldCarQuery)) {
+            	
+                oldCarStatement.setString(1, customerId);
+                try (ResultSet oldCarResultSet = oldCarStatement.executeQuery()) {
+                    while (oldCarResultSet.next()) {
+                    	
+                         carId = oldCarResultSet.getString("car_id");
+                        String carDetailsQuery = "SELECT * FROM old_car_model WHERE car_id = ?";
+                        
+                        PreparedStatement car_statement = connection.prepareStatement(carDetailsQuery);
+                        car_statement.setInt(1, Integer.parseInt(carId));
+
+                        try (ResultSet carResultSet = car_statement.executeQuery()) {
+                            if (carResultSet.next()) {
+                                model = carResultSet.getString("model");
+                                company = carResultSet.getString("company_name");
+                            }
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+
+                        String bargainRequestQuery = "SELECT * FROM bargain_request WHERE car_id = ? and accept_time  is null";
+                        
+
+                        try (PreparedStatement bargainRequestStatement = connection.prepareStatement(bargainRequestQuery)) {
+                            bargainRequestStatement.setInt(1, Integer.parseInt(carId));
+                            try (ResultSet bargainRequestResultSet = bargainRequestStatement.executeQuery()) {
+                                while (bargainRequestResultSet.next()) {
+                                    // Get customer ID from the bargain request
+                                   // out.println("hi");
+                                    String customerEmail = bargainRequestResultSet.getString("customer_id");
+
+                                    // Query to get customer information
+                                    String customerQuery = "SELECT * FROM customer WHERE \"Email_id\" = ?";
+                                    try (PreparedStatement customerStatement = connection.prepareStatement(customerQuery)) {
+                                        customerStatement.setString(1, customerEmail);
+                                        try (ResultSet customerResultSet = customerStatement.executeQuery()) {
+                                            if (customerResultSet.next()) {
+                                                // Display information for each received bargain request
+    %>
+                                                <div class="request">
+                                                    <div class="user-details">
+                                                        <img src="https://source.unsplash.com/random/140x140?person" alt="User Avatar" class="user-avatar">
+                                                        <div class="user-info">
+                                                            <h2>Model: <%= model %>  Company name: <%= company %>  </h2>
+                                                            <h2><%= customerResultSet.getString("first_name") %> <%= customerResultSet.getString("last_name") %></h2>
+                                                            <p>Email: <%= customerResultSet.getString(1) %></p>
+                                                            <p> price: <%= bargainRequestResultSet.getString(3) %> </p>
+                                                                                                     
+                                                            <!-- Add other customer information as needed -->
+                                                        </div>
+                                                    </div>
+                                                    <div class="buttons">
+                                                    <form action="request" method="post">
+                                                    <input type="hidden" name="car_id" id="car_id" value="<%=oldCarResultSet.getString("car_id") %>">
+                                                    <input type="hidden" name="price" id="price" value="<%=bargainRequestResultSet.getString(3)  %>">
+                                                     <input type="hidden" name="buyer" id="buyer" value="<%=customerResultSet.getString(1)  %>">
+                                                        <button class="accept-button"  name =1 value="Accept">Accept</button>
+                                                        <button class="reject-button" name =2 value="Reject">Reject</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Query to get car details from old_car_model view -->
+                                               
+    <%
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    %>
+    <!-- Add more requests as needed -->
+</section>
+
+</body>
+
+</html>

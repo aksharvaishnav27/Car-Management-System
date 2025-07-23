@@ -1,0 +1,217 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ page import="java.sql.*" %>
+<%@ page import="java.io.*" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+.buy-button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.buy-button:hover {
+    background-color: #45a049;
+}
+
+
+header {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.search-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.search-bar {
+    margin-bottom: 20px;
+}
+
+.search-bar input[type="text"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.search-button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.filter-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+
+
+.car-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px; 
+    margin: 0 auto; 
+}
+
+.card {
+    width: 100%; 
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    text-align: center;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card img {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.price {
+    font-weight: bold;
+    font-size: 20px;
+    color: #16a219;
+}
+
+.card-details h2 {
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+</style>
+
+</head>
+<body>
+		    <header>
+        <div class="logo">CARDX</div>
+    </header>
+    <form action="rentsortform" method="post" class="newcar-form">
+        <section class="search-section">
+            <div class="search-bar">
+                <input type="text" placeholder="Search for cars..." id="search" name="search">
+                <button class="search-button">&#128269; Search</button>
+            </div>
+            <div class="filter-buttons">
+                <table>
+                    <tr>
+                        <td> <label class="filter-button"><input type="checkbox" name ="priceRange"  id="1" value="1" > 1-5 thousand/day</label></td>
+                        <td> <label class="filter-button"><input type="checkbox" name ="priceRange"  id="2" value="2" > 5-10 thousand/day</label></td>
+                        <td> <label class="filter-button"><input type="checkbox" name ="priceRange"  id="3" value="3" > 10-20 thousand/day</label></td>
+                        <td> <label class="filter-button"><input type="checkbox" name ="priceRange"  id="4" value="4"> 20 and above thousand/day</label></td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+    </form>
+    
+    <section class="car-cards">
+    
+    
+    	<% try {
+            int a=259;
+            Class.forName("org.postgresql.Driver");
+            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "admin");
+            PreparedStatement preparedStatement2 = connection.prepareStatement("update rental_car set availability='Y' where rental_car_id IN (select distinct car_id from rent where due_date = current_date - INTERVAL '1 day')   ");
+            preparedStatement2.executeUpdate();
+            
+            PreparedStatement preparedStatement0 = connection.prepareStatement("REFRESH MATERIALIZED VIEW rent_car_model");
+            preparedStatement0.executeUpdate();
+            //Statement statement = connection.createStatement();
+            //String refreshCommand = "REFRESH MATERIALIZED VIEW rent_car_model";
+            //statement.executeUpdate(refreshCommand);//
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM rent_car_model");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            
+            ResultSet  name=(ResultSet) session.getAttribute("resultset");
+            if(name!=null){
+            	resultSet=name;
+            	session.removeAttribute("resultset");
+            }
+
+            while (resultSet.next()) {
+                a++;
+        %>
+        
+        <div class="card">
+                    <img src="<%= "https://source.unsplash.com/random/" +a+ "x150?cars" %>" alt="car_1">
+                    <div class="card-details">
+                        <span class="price">&#8377;<%= resultSet.getString("price") %>/day</span>
+                        <h1> <%= resultSet.getString("company_name") %> </h1>
+                        <h2><%= resultSet.getString("model") %></h2><br>
+                        <form onsubmit="return validateForm()" action="buyrentform" method="post" class="newcar-form"> 
+                    	<label for="rentdays">Rentdays:</label>
+                    	<input type="number" id="rentdays" name="rentdays" min="1" step="1" required>
+                   		<input type="hidden" name="car_id" id="car_id_input" value="<%= resultSet.getString("car_id") %>"><br><br>
+                  		<button type="submit" class="buy-button">Rent Now</button>
+                  	    </form>                    
+                    </div>
+                    
+                   
+
+                    
+                </div>
+        <%
+            }
+
+            resultSet.close();
+            preparedStatement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        %>
+        
+    	
+    </section>
+</body>
+</html>

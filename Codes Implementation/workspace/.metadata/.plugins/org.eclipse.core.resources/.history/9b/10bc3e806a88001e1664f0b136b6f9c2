@@ -1,0 +1,162 @@
+<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*" %>
+<%@ page import="java.io.*" %>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="oldcar.css">
+    <title>CARDX - New Cars</title>
+</head>
+
+
+
+<body>
+    <header>
+        <div class="logo">CARDX</div>
+    </header>
+    <form action="oldsortform" method="post" class="newcar-form">
+        <section class="search-section">
+            <div class="search-bar">
+                <input type="text" placeholder="Search for cars..." id="search" name="search">
+                <button class="search-button">&#128269; Search</button>
+            </div>
+            <div class="filter-buttons">
+                <table>
+                    <tr>
+                        <td> <label class="filter-button"><input type="checkbox" name ="priceRange"  id="1" value="1" > 1 lakh to 2 lakh</label></td>
+                        <td> <label class="filter-button"><input type="checkbox" name ="priceRange"  id="2" value="2" > 2 lakh to 5 lakh</label></td>
+                        <td> <label class="filter-button"><input type="checkbox" name ="priceRange"  id="3" value="3" > 5 lakh to 10 lakh</label></td>
+                        <td> <label class="filter-button"><input type="checkbox" name ="priceRange"  id="4" value="4"> 10 lakh to 20 lakh</label></td>
+                    </tr>
+    
+                       <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                       </tr>
+                       <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                       </tr>
+                       <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                       </tr>
+                       <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                       </tr>
+                       <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                       </tr>
+                       <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                       </tr>
+                    <tr>
+                        <td><label class="filter-button"><input type="checkbox" name ="priceRange" id="5"> 20 lakh to 30 lakh</label></td>
+                        <td><label class="filter-button"><input type="checkbox" name ="priceRange"  id="6"> 30 lakh to 50 lakh</label></td>
+                        <td><label class="filter-button"><input type="checkbox" name ="priceRange"  id="7"> 50 lakh to 80 lakh</label></td>
+                        <td><label class="filter-button"><input type="checkbox" name ="priceRange" id="8"> 80 lakh and above</label></td>
+                      
+                    </tr>
+                </table>
+                <!-- <label class="filter-button"><input type="checkbox"> 1 lakh to 2 lakh</label>
+                <label class="filter-button"><input type="checkbox"> 2 lakh to 5 lakh</label>
+                <label class="filter-button"><input type="checkbox"> 5 lakh to 10 lakh</label>
+                <label class="filter-button"><input type="checkbox"> 10 lakh to 20 lakh</label>
+                <label class="filter-button"><input type="checkbox"> 20 lakh and above</label>
+                <label class="filter-button"><input type="checkbox"> Model 2015 - 2020</label>
+                <label class="filter-button"><input type="checkbox"> Model 2010 - 2015</label>
+                <label class="filter-button"><input type="checkbox"> Model 2020 - 2025</label> -->
+            </div>
+        </section>
+    </form>
+    <section class="car-cards">
+        <!-- Use a loop to dynamically generate cards -->
+        <% try {
+        	
+            int a=259;
+            Class.forName("org.postgresql.Driver");
+            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "jay");
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM old_car_model" +
+                    " WHERE  not EXISTS (SELECT 1 FROM bargain_request WHERE bargain_request.accept_time IS  not NULL and old_car_model.car_id = bargain_request.car_id)");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            
+            ResultSet  name=(ResultSet) session.getAttribute("resultsetoldcar");
+            if(name!=null){
+            	resultSet=name;
+            	session.removeAttribute("resultsetoldcar");
+            }
+
+            while (resultSet.next()) {
+            	String car_id=resultSet.getString("car_id");
+                a++;
+        %>
+               <div class="card">
+               
+               
+            <div class="card-head">
+                <h2>Customer_id</h2>
+                <h2>car_id</h2>
+            </div>
+                
+                    <img src="<%= "https://source.unsplash.com/random/" +a+ "x150?"+resultSet.getString("colour")+"cars" %>" alt="car_1">
+                    <div class="card-details">
+                        <span class="price">&#8377;<%= resultSet.getString("price") %></span>
+                        <h1> <%= resultSet.getString("company_name") %> </h1>
+                        <h2><%= resultSet.getString("model") %></h2>
+                        <p> fuel_type : <%= resultSet.getString("fuel_type")+"        color :"  + resultSet.getString("colour") %></p>
+                        
+                    <form action="oldbuyform" method="post" class="newcar-form">
+                   <input type="hidden" name="car_id" id="car_id" value="<%=car_id  %>">
+                   <input type="hidden" name="price" id="price" value="<%= resultSet.getString("price") %>">
+                  <button type="submit" class="buy-button">Buy Now</button>
+                   </form>
+
+                        
+                    </div>
+                     <div class="send-barg-req">
+                <div class="send-barg-req-title">Send Bargain Request</div>
+                <div class="send-barg-req-box">
+                 <form action="bargainform" method="post" class="newcar-form">
+                    <input type="text" id="amount" name="amount" placeholder="Enter Amount">
+                    <input type="hidden" name="car_id" id="car_id" value="<%= car_id %>">
+                    <span>₹</span>
+                    <button id="sendButton">Send</button>
+                    </form>
+                </div>
+            </div>
+                    
+                </div>
+        <%
+            }
+
+            resultSet.close();
+            preparedStatement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        %>
+    </section>
+
+    
+</body>
+
+</html>

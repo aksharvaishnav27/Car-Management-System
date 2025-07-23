@@ -1,0 +1,137 @@
+package backand;
+import java.sql.*;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import jakarta.servlet.*;
+@WebServlet("/regform")
+
+public class register extends jakarta.servlet.http.HttpServlet {
+	public static  void insert(String Email_id,String first_name,String last_name,int street_number,String area_name, int apt_number,int password,int pin_code,Connection con,HttpServletRequest request,HttpServletResponse resp) throws IOException, ServletException {
+		PrintWriter out= resp.getWriter();
+		try {
+			 
+			 String sql = String.format("insert into customer " +
+					    "(\"Email_id\", password, first_name, last_name, area_name, street_number, apt_number, pincode) " +
+					    "VALUES ('%s', %d, '%s', '%s', '%s', %d, %d, %d);",
+					    Email_id, password, first_name, last_name, area_name, street_number, apt_number, pin_code);
+
+			 
+			 Statement  ps = con.createStatement();
+			 int rowsInserted = ps.executeUpdate(sql);
+			  if (rowsInserted > 0) {
+				  resp.setContentType("text/html");
+				  out.print("<h3 style='color:green'> user registered succesfully </h3>");
+             RequestDispatcher rd=request.getRequestDispatcher("/register.jsp");
+             rd.include(request, resp);
+         } else {
+        	 resp.setContentType("text/html");
+			  out.print("<h3 style='color:red'> user  not registered succesfully </h3>");
+        RequestDispatcher rd=request.getRequestDispatcher("/register.jsp");
+        rd.include(request, resp);
+         }
+
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			resp.setContentType("text/html");
+			  out.print("<h3 style='color:red'> Exception occured"+e.getMessage() +"</h3>");
+       RequestDispatcher rd=request.getRequestDispatcher("/register.jsp");
+       rd.include(request, resp);
+		}
+	}
+	 protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		 PrintWriter out= response.getWriter();
+		 String customer_id = request.getParameter("customer_id");
+	        String first_name = request.getParameter("first_name");
+	       
+	        String last_name = request.getParameter("last_name");
+	        String street_number1 = request.getParameter("street_number");
+	        String area_name = request.getParameter("area_name");
+	        String apt_number1 =request.getParameter("apt_number");
+	        String password1 = request.getParameter("password");
+	        String pin_code1 = request.getParameter("pin_code");
+	        
+	        
+	        try {
+	        	
+	            Class.forName("org.postgresql.Driver");
+
+	            String url = "jdbc:postgresql://localhost:5432/postgres";
+	            String username = "postgres";
+	            String password2 = "jay";
+	            
+	            Connection con = DriverManager.getConnection(url, username, password2);
+
+	           
+	            Statement  ps = con.createStatement();
+
+	            if ( customer_id == null ||  customer_id.trim().isEmpty()) {
+	            	 request.setAttribute("customeridError", "Please fill in the first name.");
+	            }
+	           // int rowsInserted = ps.executeUpdate(sql);
+	            if (first_name == null || first_name.trim().isEmpty()) {
+	                request.setAttribute("firstNameError", "Please fill in the first name.");
+	            }
+
+	            if (last_name == null || last_name.trim().isEmpty()) {
+	                request.setAttribute("lastNameError", "Please fill in the last name.");
+	            }
+	            
+				if (street_number1 == null || street_number1.trim().isEmpty()) {
+	                request.setAttribute("streetnumberError", "Please fill in the last name.");
+	            }
+	            if (area_name == null || area_name.trim().isEmpty()) {
+	                request.setAttribute("areanameError", "Please fill in the last name.");
+	                out.println("eroor");
+	            }
+	            if (apt_number1 == null || apt_number1.trim().isEmpty()) {
+	                request.setAttribute("aptnumberError", "Please fill in the last name.");
+	            }
+	            if (password1 == null || password1.trim().isEmpty()) {
+	                request.setAttribute("passwordError", "Please fill in the last name.");
+	            }
+	            if (pin_code1 == null || pin_code1.trim().isEmpty()) {
+	                request.setAttribute("pincodeError", "Please fill in the last name.");
+	            }
+              
+	            // Repeat similar checks for other fields
+
+	            if (request.getAttribute("firstNameError") != null || request.getAttribute("lastNameError") != null || request.getAttribute("streetnumberError") != null ||request.getAttribute("areaNameError") != null ||request.getAttribute("aptnumberError") != null ||request.getAttribute("passwordError") != null ||request.getAttribute("pincodeError") != null || request.getAttribute("customeridError") != null ) {
+	            	out.print("<h3 style='color:red'> Exception occured </h3>");
+	            	RequestDispatcher rd = request.getRequestDispatcher("/register.jsp");
+	                
+	                rd.forward(request, response);
+	            } else {
+	            	int street_number = 0;
+	            	int apt_number = 0;
+					int password = 0;
+					int pin_code = 0;
+					if(password1.length()!=0 && street_number1.length()!=0 && apt_number1.length()!=0 && pin_code1.length()!=0) {
+	            		 street_number=Integer.parseInt(street_number1);
+	            		 password=Integer.parseInt(password1);
+	            		apt_number=Integer.parseInt(apt_number1);
+	            		 pin_code=Integer.parseInt(pin_code1);
+	            	}
+					
+					insert(customer_id,first_name,last_name,street_number,area_name,apt_number,password,pin_code,con,request, response);
+	                
+	            }
+	            
+	           
+	            con.close();
+	        } 
+	        catch (ClassNotFoundException e) {
+	            e.printStackTrace();
+	            System.out.println("PostgreSQL JDBC driver not found");
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	            System.out.println("Connection to the database failed");
+	        }
+	 }
+}

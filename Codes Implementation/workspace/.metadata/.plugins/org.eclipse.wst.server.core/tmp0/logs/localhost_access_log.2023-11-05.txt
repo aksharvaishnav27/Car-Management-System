@@ -1,0 +1,16 @@
+127.0.0.1 - - [05/Nov/2023:00:36:54 +0530] "GET / HTTP/1.1" 404 752
+0:0:0:0:0:0:0:1 - - [05/Nov/2023:00:36:55 +0530] "GET /register_login/index.jsp HTTP/1.1" 200 1895
+0:0:0:0:0:0:0:1 - - [05/Nov/2023:00:37:00 +0530] "GET /register_login/register.jsp HTTP/1.1" 200 2437
+0:0:0:0:0:0:0:1 - - [05/Nov/2023:00:37:14 +0530] "POST /register_login/regform HTTP/1.1" 200 2622
+127.0.0.1 - - [05/Nov/2023:01:03:58 +0530] "GET / HTTP/1.1" 404 752
+0:0:0:0:0:0:0:1 - - [05/Nov/2023:01:03:59 +0530] "GET /register_login/register.jsp HTTP/1.1" 200 2437
+0:0:0:0:0:0:0:1 - - [05/Nov/2023:01:04:02 +0530] "POST /register_login/regform HTTP/1.1" 200 2437
+0:0:0:0:0:0:0:1 - - [05/Nov/2023:01:04:03 +0530] "POST /register_login/regform HTTP/1.1" 200 2437
+0:0:0:0:0:0:0:1 - - [05/Nov/2023:01:04:04 +0530] "POST /register_login/regform HTTP/1.1" 200 2437
+0:0:0:0:0:0:0:1 - - [05/Nov/2023:01:04:04 +0530] "POST /register_login/regform HTTP/1.1" 200 2437
+0:0:0:0:0:0:0:1 - - [05/Nov/2023:01:04:04 +0530] "POST /register_login/regform HTTP/1.1" 200 2437
+0:0:0:0:0:0:0:1 - - [05/Nov/2023:01:04:05 +0530] "POST /register_login/regform HTTP/1.1" 200 2437
+0:0:0:0:0:0:0:1 - - [05/Nov/2023:01:04:05 +0530] "POST /register_login/regform HTTP/1.1" 200 2437
+0:0:0:0:0:0:0:1 - - [05/Nov/2023:01:04:41 +0530] "GET /register_login/index.jsp HTTP/1.1" 200 1895
+0:0:0:0:0:0:0:1 - - [05/Nov/2023:01:05:11 +0530] "POST /register_login/loginform HTTP/1.1" 500 1431
+0:0:0:0:0:0:0:1 - - [05/Nov/2023:01:14:05 +0530] "GET /register_login/register.jsp HTTP/1.1" 200 2437
