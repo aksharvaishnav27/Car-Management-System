@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Car Dealer Management System </title>
+  <title>Car Dealer Management System - README</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -32,19 +32,24 @@
 </head>
 <body>
 
+  <!-- Title -->
   <h1>Car Dealer Management System</h1>
 
+  <!-- Objective -->
   <div class="section">
     <h2>Objective</h2>
     <p>
-      Design and implement a user-friendly car dealer management system to streamline dealership operations, enhance customer experience, and improve inventory and sales management efficiency.
+      Design and implement a user-friendly car dealer management system to streamline dealership operations,
+      enhance customer experience, and improve inventory and sales management efficiency.
     </p>
   </div>
 
+  <!-- Description -->
   <div class="section">
     <h2>Description</h2>
     <p>
-      The Car Dealer Management System (CDMS) helps dealerships manage car inventory, customer interactions, and sales/rental decisions. It supports multiple user roles:
+      The Car Dealer Management System (CDMS) helps dealerships manage car inventory, customer interactions, and sales/rental decisions. 
+      It supports multiple user roles:
     </p>
     <ul>
       <li><strong>Customers:</strong> Sign up, buy/sell new or old cars, rent cars, and request services.</li>
@@ -59,6 +64,7 @@
     </ul>
   </div>
 
+  <!-- Project Structure -->
   <div class="section">
     <h2>Project Structure</h2>
     <pre>
@@ -108,10 +114,10 @@ main/
 │   ├── sellcar.css
 │   ├── sell_car.jsp
 │   ├── style.css
-│   ├── temp
+│   ├── temp/
 │   ├── userdetail.css
 │   ├── viewfeedback.jsp
-│   └── viewtransection.jsp
+│   └── viewtransaction.jsp
 ├── java/
 │   ├── accept_bargain.java
 │   ├── addimage.java
@@ -133,11 +139,12 @@ main/
 │   ├── sellcar.java
 │   ├── send_bargain.java
 │   ├── sent_serv_req.java
-│   └── temp
-└── temp
+│   └── temp/
+└── temp/
     </pre>
   </div>
 
+  <!-- Contents -->
   <div class="section">
     <h2>Contents</h2>
     <ul>
@@ -151,6 +158,7 @@ main/
     </ul>
   </div>
 
+  <!-- Next Steps -->
   <div class="section">
     <h2>Next Steps</h2>
     <ul>
