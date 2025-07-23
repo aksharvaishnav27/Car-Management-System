@@ -97,16 +97,6 @@ main/
 └── temp/
 ```
 
-## Contents
-
-- Software Requirements Specification
-- Entity Relationship Model
-- ER Diagram to Relational Model
-- Noun Analysis
-- Normalization Schema
-- DDL Script
-- All implementation codes
-
 ## Next Steps
 
 - Add external views such as payment gateways.
