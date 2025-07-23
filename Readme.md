@@ -12,7 +12,7 @@
       background-color: #f9f9f9;
       color: #333;
     }
-    h1{
+    h1 {
       color: #004080;
     }
     ul {
@@ -49,9 +49,7 @@
       <li><strong>Mechanics:</strong> Register and provide services after subscribing monthly (₹1000).</li>
       <li><strong>Admin:</strong> Earns 5% commission on old car sales, profits from new car sales, rentals, and mechanic subscriptions.</li>
     </ul>
-    <p>
-      Additional features include:
-    </p>
+    <p>Additional features include:</p>
     <ul>
       <li>Filtering cars by price, color, brand, etc.</li>
       <li>Bargaining feature for old cars.</li>
